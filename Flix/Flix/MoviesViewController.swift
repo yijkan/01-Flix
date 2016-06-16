@@ -10,16 +10,22 @@ import UIKit
 import AFNetworking
 import MBProgressHUD
 
-class MoviesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate,UISearchBarDelegate {
+class MoviesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+    
+    let defaults = NSUserDefaults.standardUserDefaults()
+    
+    @IBOutlet weak var networkErrorView: UIView!
+    @IBOutlet weak var viewSelector: UISegmentedControl!
     
     @IBOutlet weak var moviesTable: UITableView!
+    @IBOutlet weak var moviesCollection: UICollectionView!
+    
     @IBOutlet weak var moviesSearchBar: UISearchBar!
-    @IBOutlet weak var networkErrorView: UIView!
     
-    var movies: [NSDictionary]?
+    
+    var movies: [NSDictionary]? = []
     var filteredMovies: [NSDictionary]?
-    var refreshControl: UIRefreshControl!
-    
+
     func fadeErrorIn() {
 //        if self.networkErrorView.hidden {
             self.networkErrorView.alpha = 0.0
@@ -42,11 +48,24 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
             UIView.animateWithDuration(0.3, animations:{ () -> Void in
                 self.networkErrorView.alpha = 0.0
             })
-//            self.networkErrorView.hidden = true
+            self.networkErrorView.hidden = true
         }
     }
     
-    func loadTable(useHUD:Bool) {
+    func sortMovies() {
+        let sortBy = [ {(m1: NSDictionary, m2: NSDictionary) -> Bool in (m1["popularity"] as! Double) > (m2["popularity"] as! Double)}, // order by popularity
+            {(m1: NSDictionary, m2: NSDictionary) -> Bool in (m1["title"] as! String) < (m2["title"] as! String)} // order by title
+        ]
+        self.movies = self.movies!.sort(sortBy[self.defaults.integerForKey("order_by")])
+        self.filteredMovies = self.movies
+        self.moviesTable.reloadData()
+        self.moviesCollection.reloadData()
+    }
+    
+    var refreshTableControl: UIRefreshControl!
+    var refreshCollectionControl: UIRefreshControl!
+    
+    func loadMovies(useHUD:Bool) {
         let apiKey = "95dd50b36271bd60b6404e430282e991"
         let url = NSURL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=\(apiKey)")
         let request = NSURLRequest(
@@ -71,14 +90,16 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
                     if let responseDictionary = try! NSJSONSerialization.JSONObjectWithData(
                         data, options:[]) as? NSDictionary {
                         self.movies = responseDictionary["results"] as! [NSDictionary]
-                        self.filteredMovies = self.movies
-                        self.moviesTable.reloadData()
+                        self.sortMovies()
                     }
-                    self.refreshControl.endRefreshing()
-
+                    self.refreshTableControl.endRefreshing()
+                    self.refreshCollectionControl.endRefreshing()
                 } else {
-                    self.refreshControl.endRefreshing()
+                    self.refreshTableControl.endRefreshing()
+                    self.refreshCollectionControl.endRefreshing()
                     self.fadeErrorIn()
+                    self.movies = []
+                    self.sortMovies()
                 }
             }
         )
@@ -88,20 +109,40 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        refreshControl = UIRefreshControl()
-        refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), forControlEvents: UIControlEvents.ValueChanged)
-        moviesTable.insertSubview(refreshControl, atIndex: 0)
+        refreshTableControl = UIRefreshControl()
+        refreshTableControl.addTarget(self, action: #selector(refreshControlAction(_:)), forControlEvents: UIControlEvents.ValueChanged)
+        moviesTable.insertSubview(refreshTableControl, atIndex: 0)
+        
+        refreshCollectionControl = UIRefreshControl()
+        refreshCollectionControl.addTarget(self, action: #selector(refreshControlAction(_:)), forControlEvents: UIControlEvents.ValueChanged)
+        moviesCollection.insertSubview(refreshCollectionControl, atIndex: 0)
+
         
         moviesTable.dataSource = self
         moviesTable.delegate = self
         
+        moviesCollection.dataSource = self
+        moviesCollection.delegate = self
+        
         moviesSearchBar.delegate = self
         
-        loadTable(true)
+        loadMovies(true)
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        sortMovies()
+    }
+    
+//    TODO um???
+//    override func viewDidAppear(animated: Bool) {
+//        navigationController?.hidesBarsOnSwipe = true
+//    }
+    
     func refreshControlAction(refreshControl: UIRefreshControl) {
-        loadTable(false)
+        loadMovies(false)
+        print("refreshing")
+        //not working when there's no internet at first but using grid view? seems like it's because the collectionView isn't there when there are no images...
     }
     
     override func didReceiveMemoryWarning() {
@@ -127,6 +168,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = moviesTable.dequeueReusableCellWithIdentifier("movieCell", forIndexPath: indexPath) as! MovieCell
         let movie = filteredMovies![indexPath.row]
+        cell.movie = movie
         let title = movie["title"] as! String
         let overview = movie["overview"] as! String
         let baseURL = "http://image.tmdb.org/t/p/w342"
@@ -135,23 +177,61 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         cell.overviewLabel.text = overview
         
         let imageRequest = NSURLRequest(URL: NSURL(string: baseURL + posterPath)!)
-        cell.posterView.setImageWithURLRequest(
+        cell.posterImageView.setImageWithURLRequest(
                 imageRequest,
                 placeholderImage: nil,
                 success: { (imageRequest, imageResponse, image) -> Void in
                     if imageResponse != nil {
-                        cell.posterView.alpha = 0.0
-                        cell.posterView.image = image
+                        cell.posterImageView.alpha = 0.0
+                        cell.posterImageView.image = image
                         UIView.animateWithDuration(0.3, animations: { () -> Void in
-                            cell.posterView.alpha = 1.0
+                            cell.posterImageView.alpha = 1.0
                         })
                     } else {
-                        cell.posterView.image = image
+                        cell.posterImageView.image = image
                     }
                 },
                 failure: { (imageRequest, imageResponse, error) -> Void in
-                    cell.posterView.image = nil
+                    cell.posterImageView.image = nil
                 }
+        )
+        return cell
+    }
+    
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if let movies = filteredMovies {
+            return movies.count
+        } else {
+            return 0
+        }
+    }
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        print(indexPath.row)
+        
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("MovieCollectionViewCell", forIndexPath: indexPath) as! MovieCollectionViewCell
+        let movie = filteredMovies![indexPath.row]
+        cell.movie = movie
+        let baseURL = "http://image.tmdb.org/t/p/w342"
+        let posterPath = movie["poster_path"] as! String
+        let imageRequest = NSURLRequest(URL: NSURL(string: baseURL + posterPath)!)
+        cell.posterImageView.setImageWithURLRequest(
+            imageRequest,
+            placeholderImage: nil,
+            success: { (imageRequest, imageResponse, image) -> Void in
+                if imageResponse != nil {
+                    cell.posterImageView.alpha = 0.0
+                    cell.posterImageView.image = image
+                    UIView.animateWithDuration(0.3, animations: { () -> Void in
+                        cell.posterImageView.alpha = 1.0
+                    })
+                } else {
+                    cell.posterImageView.image = image
+                }
+            },
+            failure: { (imageRequest, imageResponse, error) -> Void in
+                cell.posterImageView.image = nil
+            }
         )
         return cell
     }
@@ -176,6 +256,19 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         moviesTable.reloadData()
     }
     
+    @IBAction func viewChange(sender: AnyObject) {
+        switch viewSelector.selectedSegmentIndex {
+        case 0:
+            moviesTable.hidden = false
+            moviesCollection.hidden = true
+        case 1:
+            moviesTable.hidden = true
+            moviesCollection.hidden = false
+        default:
+            moviesTable.hidden = false
+            moviesCollection.hidden = true
+        }
+    }
     
     /*
      // MARK: - Navigation

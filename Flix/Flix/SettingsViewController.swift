@@ -9,11 +9,21 @@
 import UIKit
 
 class SettingsViewController: UIViewController {
-
+    
+    let defaults = NSUserDefaults.standardUserDefaults()
+    @IBOutlet weak var colorSchemeSwitch: UISwitch!
+    @IBOutlet weak var orderSegCon: UISegmentedControl!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        colorSchemeSwitch.on = defaults.boolForKey("dark_scheme")
+        orderSegCon.selectedSegmentIndex = defaults.integerForKey("order_by")
     }
 
     override func didReceiveMemoryWarning() {
@@ -21,6 +31,15 @@ class SettingsViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func colorSchemeChange(sender: AnyObject) {
+        defaults.setBool(colorSchemeSwitch.on, forKey: "dark_scheme")
+        defaults.synchronize()
+    }
+    
+    @IBAction func orderChange(sender: AnyObject) {
+        defaults.setInteger(orderSegCon.selectedSegmentIndex, forKey: "order_by")
+        defaults.synchronize()
+    }
 
     /*
     // MARK: - Navigation
