@@ -32,7 +32,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
 //            //TODO maybe blink once?
 //        }
         
-        //TODO decide later if I want to do anything about the error re-appearing
+        // TODO decide later if I want to do anything about the error re-appearing
     }
     
     func fadeErrorOut() {
@@ -133,7 +133,26 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         let posterPath = movie["poster_path"] as! String
         cell.titleLabel.text = title
         cell.overviewLabel.text = overview
-        cell.posterView.setImageWithURL(NSURL(string: baseURL + posterPath)!)
+        
+        let imageRequest = NSURLRequest(URL: NSURL(string: baseURL + posterPath)!)
+        cell.posterView.setImageWithURLRequest(
+                imageRequest,
+                placeholderImage: nil,
+                success: { (imageRequest, imageResponse, image) -> Void in
+                    if imageResponse != nil {
+                        cell.posterView.alpha = 0.0
+                        cell.posterView.image = image
+                        UIView.animateWithDuration(0.3, animations: { () -> Void in
+                            cell.posterView.alpha = 1.0
+                        })
+                    } else {
+                        cell.posterView.image = image
+                    }
+                },
+                failure: { (imageRequest, imageResponse, error) -> Void in
+                    cell.posterView.image = nil
+                }
+        )
         return cell
     }
     
