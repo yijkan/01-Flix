@@ -20,6 +20,32 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     var filteredMovies: [NSDictionary]?
     var refreshControl: UIRefreshControl!
     
+    func fadeErrorIn() {
+//        if self.networkErrorView.hidden {
+            self.networkErrorView.alpha = 0.0
+            self.networkErrorView.hidden = false
+            UIView.animateWithDuration(0.3, animations:{ () -> Void in
+                self.networkErrorView.alpha = 0.75
+            })
+//        } else {
+//            //already visible 
+//            //TODO maybe blink once?
+//        }
+        
+        //TODO decide later if I want to do anything about the error re-appearing
+    }
+    
+    func fadeErrorOut() {
+        // TODO doesn't seem to be animating
+        if !self.networkErrorView.hidden {
+            self.networkErrorView.alpha = 0.75
+            UIView.animateWithDuration(0.3, animations:{ () -> Void in
+                self.networkErrorView.alpha = 0.0
+            })
+//            self.networkErrorView.hidden = true
+        }
+    }
+    
     func loadTable(useHUD:Bool) {
         let apiKey = "95dd50b36271bd60b6404e430282e991"
         let url = NSURL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=\(apiKey)")
@@ -40,18 +66,19 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
             session.dataTaskWithRequest(request, completionHandler: { (dataOrNil, response, error) in
                 if useHUD {MBProgressHUD.hideHUDForView(self.view, animated: true)}
                 if let data = dataOrNil {
-                    self.networkErrorView.hidden = true
-                    //TODO fade out
+                    self.fadeErrorOut()
+                    
                     if let responseDictionary = try! NSJSONSerialization.JSONObjectWithData(
                         data, options:[]) as? NSDictionary {
                         self.movies = responseDictionary["results"] as! [NSDictionary]
                         self.filteredMovies = self.movies
                         self.moviesTable.reloadData()
-                        self.refreshControl.endRefreshing()
                     }
+                    self.refreshControl.endRefreshing()
+
                 } else {
-                    self.networkErrorView.hidden = false
-                    //TODO fade in
+                    self.refreshControl.endRefreshing()
+                    self.fadeErrorIn()
                 }
             }
         )
@@ -116,6 +143,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
             return movieTitle.rangeOfString(searchText, options: .CaseInsensitiveSearch) != nil })
         moviesTable.reloadData()
     }
+
     
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
         self.moviesSearchBar.showsCancelButton = true
