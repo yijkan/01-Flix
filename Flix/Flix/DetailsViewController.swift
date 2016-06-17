@@ -10,11 +10,23 @@ import UIKit
 
 class DetailsViewController: UIViewController {
     
+    let defaults = NSUserDefaults.standardUserDefaults()
+    var bg:UIColor!
+    var text:UIColor!
     var movie: NSDictionary!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var overviewText: UITextView!
     @IBOutlet weak var posterImageView: UIImageView!
 
+    // this function is copied from https://coderwall.com/p/6rfitq/ios-ui-colors-with-hex-values-in-swfit
+    func UIColorFromHex(rgbValue:UInt32, alpha:Double=1.0)->UIColor {
+        let red = CGFloat((rgbValue & 0xFF0000) >> 16)/256.0
+        let green = CGFloat((rgbValue & 0xFF00) >> 8)/256.0
+        let blue = CGFloat(rgbValue & 0xFF)/256.0
+        
+        return UIColor(red:red, green:green, blue:blue, alpha:CGFloat(alpha))
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -70,7 +82,22 @@ class DetailsViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        // TODO set colors
+        if defaults.boolForKey("dark_scheme") {
+            bg = UIColor.blackColor()
+            text = UIColor.blackColor()
+            UIApplication.sharedApplication().statusBarStyle = .LightContent
+        } else {
+            bg = UIColorFromHex(0xFAF5FF)
+            text = UIColorFromHex(0x3D007A)
+            UIApplication.sharedApplication().statusBarStyle = .Default
+        }
+        if let navigationBar = navigationController?.navigationBar {
+            navigationBar.barTintColor = bg
+            navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: text]
+        }
+
+        view.backgroundColor = bg
+        
     }
 
     override func didReceiveMemoryWarning() {

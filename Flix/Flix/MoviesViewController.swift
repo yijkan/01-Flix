@@ -15,11 +15,14 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     let defaults = NSUserDefaults.standardUserDefaults()
     
     @IBOutlet weak var networkErrorView: UIView!
+
+    @IBOutlet weak var bottomBar: UIToolbar!
     @IBOutlet weak var viewSelector: UISegmentedControl!
     
     @IBOutlet weak var moviesTable: UITableView!
     @IBOutlet weak var moviesCollection: UICollectionView!
     
+    @IBOutlet weak var searchbarBG: UIView!
     @IBOutlet weak var moviesSearchBar: UISearchBar!
     var searchBar: UISearchBar!
     
@@ -150,16 +153,22 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
             bg = UIColor.blackColor()
             text = UIColor.whiteColor()
             UIApplication.sharedApplication().statusBarStyle = .LightContent
+            moviesSearchBar.barStyle = .Black
         } else {
             bg = UIColorFromHex(0xFAF5FF)
             text = UIColorFromHex(0x3D007A)
             UIApplication.sharedApplication().statusBarStyle = .Default
+            moviesSearchBar.barStyle = .Default
         }
         if let navigationBar = navigationController?.navigationBar {
             navigationBar.barTintColor = bg
             navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: text]
         }
-        
+        view.backgroundColor = bg
+        moviesTable.backgroundColor = bg
+        moviesCollection.backgroundColor = bg
+        bottomBar.barTintColor = bg
+        searchbarBG.backgroundColor = bg
         sortMovies()
     }
  

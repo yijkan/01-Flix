@@ -92,14 +92,15 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <searchBar contentMode="scaleToFill" placeholder="Search for a movie by title" id="pJu-ep-c95">
+                            <view contentMode="scaleToFill" id="Qim-IA-Zwt">
+                                <rect key="frame" x="0.0" y="64" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <searchBar contentMode="scaleToFill" searchBarStyle="minimal" placeholder="Search for a movie by title" id="pJu-ep-c95">
                                 <rect key="frame" x="0.0" y="64" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <textInputTraits key="textInputTraits"/>
-                                <scopeButtonTitles>
-                                    <string>Title</string>
-                                    <string>Title</string>
-                                </scopeButtonTitles>
                             </searchBar>
                             <view alpha="0.0" contentMode="scaleToFill" id="h85-dB-PQ9">
                                 <rect key="frame" x="0.0" y="64" width="320" height="44"/>
@@ -123,7 +124,6 @@
                                         <segmentedControl key="customView" opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" segmentControlStyle="plain" selectedSegmentIndex="0" id="7ck-7E-WKC">
                                             <rect key="frame" x="16" y="7.5" width="290" height="29"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                             <segments>
                                                 <segment title="List View"/>
                                                 <segment title="Grid View"/>
@@ -184,6 +184,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="bottomBar" destination="YDb-0e-OxT" id="yia-kT-4UI"/>
                         <outlet property="detailsOverviewText" destination="ZZ6-6Q-AN2" id="KBq-UZ-1av"/>
                         <outlet property="detailsPosterImageView" destination="gA7-F0-5jS" id="gXl-3J-zva"/>
                         <outlet property="detailsTitle" destination="Jm7-ts-0Hd" id="iWo-hh-8V6"/>
@@ -192,6 +193,7 @@
                         <outlet property="moviesSearchBar" destination="pJu-ep-c95" id="43M-pN-Mc2"/>
                         <outlet property="moviesTable" destination="9r0-wT-ISX" id="GcK-hv-oTu"/>
                         <outlet property="networkErrorView" destination="h85-dB-PQ9" id="I9M-CQ-L2C"/>
+                        <outlet property="searchbarBG" destination="Qim-IA-Zwt" id="32I-MG-lfq"/>
                         <outlet property="viewSelector" destination="7ck-7E-WKC" id="sbT-n0-MHl"/>
                     </connections>
                 </viewController>
