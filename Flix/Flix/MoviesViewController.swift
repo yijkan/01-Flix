@@ -25,6 +25,8 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     @IBOutlet weak var detailsView: UIView!
     @IBOutlet weak var detailsTitle: UILabel!
     @IBOutlet weak var detailsOverview: UILabel!
+    @IBOutlet weak var detailsOverviewText: UITextView!
+    @IBOutlet weak var detailsPosterImageView: UIImageView!
     
     
     var movies: [NSDictionary]? = []
@@ -237,32 +239,82 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         return cell
     }
     
+
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         collectionView.deselectItemAtIndexPath(indexPath, animated: true)
         let movie = filteredMovies![indexPath.row]
         detailsTitle.text = movie["title"] as! String
-        detailsOverview.text = movie["overview"] as! String
+        detailsOverviewText.text = movie["overview"] as! String
+        
+        ///HERE
+        if let posterPath = movie["poster_path"] as? String {
+            print(posterPath)
+            
+            let smallImageRequest = NSURLRequest(URL: NSURL(string: "http://image.tmdb.org/t/p/w45\(posterPath)")!)
+            let largeImageRequest = NSURLRequest(URL: NSURL(string: "http://image.tmdb.org/t/p/original\(posterPath)")!)
+            
+            detailsPosterImageView.setImageWithURLRequest(
+                smallImageRequest,
+                placeholderImage: nil,
+                success: { (smallImageRequest, smallImageResponse, smallImage) in
+                    print("loaded small")
+                    self.detailsPosterImageView.alpha = 0.0
+                    self.detailsPosterImageView.image = smallImage;
+                    UIView.animateWithDuration(
+                        0.3,
+                        animations: { () -> Void in self.detailsPosterImageView.alpha = 1.0 },
+                        completion: { (success) -> Void in
+                            self.detailsPosterImageView.setImageWithURLRequest(
+                                largeImageRequest,
+                                placeholderImage: smallImage,
+                                success: { (largeImageRequest, largeImageResponse, largeImage) -> Void in
+                                    print("loaded large")
+                                    self.detailsPosterImageView.image = largeImage
+                                },
+                                failure: { (request, response, error) -> Void in
+                                    print("couldn't load large")
+                                    self.detailsPosterImageView.image = smallImage
+                                }
+                            )
+                        }
+                    )
+                },
+                failure: { (request, response, error) -> Void in
+                    print("couldn't load small")
+                    self.detailsPosterImageView.setImageWithURLRequest(
+                        largeImageRequest,
+                        placeholderImage: nil,
+                        success: { (largeImageRequest, largeImageResponse, largeImage) -> Void in
+                            print("but could load large")
+                            self.detailsPosterImageView.image = largeImage
+                        },
+                        failure: { (request, response, error) -> Void in
+                            print("couldn't load large either")
+                            self.detailsPosterImageView.image = nil
+                        }
+                    )
+                }
+            )
+            
+        } else {
+            
+        }
         
         detailsView.alpha = 0.0
         UIView.animateWithDuration(0.3, animations:{ () -> Void in
-            self.detailsView.alpha = 0.9
+            self.detailsView.alpha = 1
         })
     }
+
     
     @IBAction func closeDetails(sender: AnyObject) {
-        detailsView.alpha = 0.9
+        detailsView.alpha = 1
         UIView.animateWithDuration(0.3, animations:{ () -> Void in
             self.detailsView.alpha = 0.0
         })
     }
     
-    //!!!
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-//        filteredMovies = searchText.isEmpty ? movies : movies!.filter({(movie: NSDictionary) -> Bool in
-//            let movieTitle = movie["title"] as! String
-//            return movieTitle.rangeOfString(searchText, options: .CaseInsensitiveSearch) != nil })
-//        moviesTable.reloadData()
-//        moviesCollection.reloadData()
         sortMovies()
     }
 
@@ -293,6 +345,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         case 0:
             moviesTable.hidden = false
             moviesCollection.hidden = true
+            detailsView.alpha = 0
         case 1:
             moviesTable.hidden = true
             moviesCollection.hidden = false
