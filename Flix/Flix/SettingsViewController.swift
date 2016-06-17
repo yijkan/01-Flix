@@ -23,15 +23,6 @@ class SettingsViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-    // this function is copied from https://coderwall.com/p/6rfitq/ios-ui-colors-with-hex-values-in-swfit
-    func UIColorFromHex(rgbValue:UInt32, alpha:Double=1.0)->UIColor {
-        let red = CGFloat((rgbValue & 0xFF0000) >> 16)/256.0
-        let green = CGFloat((rgbValue & 0xFF00) >> 8)/256.0
-        let blue = CGFloat(rgbValue & 0xFF)/256.0
-        
-        return UIColor(red:red, green:green, blue:blue, alpha:CGFloat(alpha))
-    }
-    
     func setColors() {
         if defaults.boolForKey("dark_scheme") {
             let black = UIColor.blackColor()
@@ -47,8 +38,8 @@ class SettingsViewController: UIViewController {
             UIApplication.sharedApplication().statusBarStyle = .LightContent
             
         } else {
-            let dark = UIColorFromHex(0x3D007A, alpha: 1.0)
-            let light = UIColorFromHex(0xFAF5FF, alpha: 1.0)
+            let dark = UIColorFromHex(darkHex)
+            let light = UIColorFromHex(lightHex)
             
             view.backgroundColor = light
             colorSchemeLabel.textColor = dark

@@ -35,15 +35,6 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     var movies: [NSDictionary]? = []
     var filteredMovies: [NSDictionary]?
     
-    // this function is copied from https://coderwall.com/p/6rfitq/ios-ui-colors-with-hex-values-in-swfit
-    func UIColorFromHex(rgbValue:UInt32, alpha:Double=1.0)->UIColor {
-        let red = CGFloat((rgbValue & 0xFF0000) >> 16)/256.0
-        let green = CGFloat((rgbValue & 0xFF00) >> 8)/256.0
-        let blue = CGFloat(rgbValue & 0xFF)/256.0
-        
-        return UIColor(red:red, green:green, blue:blue, alpha:CGFloat(alpha))
-    }
-    
     var bg:UIColor!
     var text:UIColor!
 
@@ -155,8 +146,8 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
             UIApplication.sharedApplication().statusBarStyle = .LightContent
             moviesSearchBar.barStyle = .Black
         } else {
-            bg = UIColorFromHex(0xFAF5FF)
-            text = UIColorFromHex(0x3D007A)
+            bg = UIColorFromHex(lightHex)
+            text = UIColorFromHex(darkHex)
             UIApplication.sharedApplication().statusBarStyle = .Default
             moviesSearchBar.barStyle = .Default
         }

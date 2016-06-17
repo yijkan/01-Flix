@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		890CAE8C1D14BEBF0049FEAD /* util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890CAE8B1D14BEBF0049FEAD /* util.swift */; };
 		8957F9781D130E1F007DDB9C /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8957F9771D130E1F007DDB9C /* SettingsViewController.swift */; };
 		896D02821D11F22A0016F9AB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 896D02811D11F22A0016F9AB /* AppDelegate.swift */; };
 		896D02871D11F22A0016F9AB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 896D02851D11F22A0016F9AB /* Main.storyboard */; };
@@ -22,6 +23,7 @@
 /* Begin PBXFileReference section */
 		2049DA9E3D5393CA6BA18FF4 /* Pods_Flix.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Flix.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		50DDBBDAAFC72923B1CF197E /* Pods-Flix.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flix.release.xcconfig"; path = "Pods/Target Support Files/Pods-Flix/Pods-Flix.release.xcconfig"; sourceTree = "<group>"; };
+		890CAE8B1D14BEBF0049FEAD /* util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = util.swift; sourceTree = "<group>"; };
 		8957F9771D130E1F007DDB9C /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		896D027E1D11F22A0016F9AB /* Flix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flix.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		896D02811D11F22A0016F9AB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -76,6 +78,7 @@
 				896D02881D11F22A0016F9AB /* Assets.xcassets */,
 				896D028A1D11F22A0016F9AB /* LaunchScreen.storyboard */,
 				896D028D1D11F22A0016F9AB /* Info.plist */,
+				890CAE8B1D14BEBF0049FEAD /* util.swift */,
 			);
 			path = Flix;
 			sourceTree = "<group>";
@@ -239,6 +242,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				890CAE8C1D14BEBF0049FEAD /* util.swift in Sources */,
 				896D02821D11F22A0016F9AB /* AppDelegate.swift in Sources */,
 				896D02961D11F40B0016F9AB /* MoviesViewController.swift in Sources */,
 				89AD824C1D13474D00967B87 /* MovieCollectionViewCell.swift in Sources */,
