@@ -10,20 +10,23 @@ import UIKit
 
 class DetailsViewController: UIViewController {
     
-    
+    var movie: NSDictionary!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var overviewLabel: UILabel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        titleLabel.text = movie["title"] as! String
+        overviewLabel.text = movie["overview"] as! String
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    
     
 
     /*

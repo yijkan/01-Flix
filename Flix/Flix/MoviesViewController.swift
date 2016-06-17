@@ -236,16 +236,26 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         return cell
     }
     
-    // TODO it's not working
-//    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-//        print("\(indexPath.row) selected")
-//        collectionView.deselectItemAtIndexPath(indexPath, animated: true)
-//        let movie = filteredMovies![indexPath.row]
-//        detailsTitle.text = movie["title"] as! String
-//        detailsOverview.text = movie["overview"] as! String
-//        detailsView.hidden = false
-//    }
-    // using segue for now
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        print("\(indexPath.row) selected")
+        collectionView.deselectItemAtIndexPath(indexPath, animated: true)
+        let movie = filteredMovies![indexPath.row]
+        detailsTitle.text = movie["title"] as! String
+        detailsOverview.text = movie["overview"] as! String
+        
+        detailsView.alpha = 0.0
+        UIView.animateWithDuration(0.3, animations:{ () -> Void in
+            self.detailsView.alpha = 0.9
+        })
+    }
+    
+    @IBAction func closeDetails(sender: AnyObject) {
+        detailsView.alpha = 0.9
+        UIView.animateWithDuration(0.3, animations:{ () -> Void in
+            self.detailsView.alpha = 0.0
+        })
+    }
+    
     
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
@@ -282,13 +292,20 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         }
     }
     
-//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-//        print("preparing for segue")
-//        var vc = segue.destinationViewController as! DetailsViewController
-//        var indexPath = moviesCollection.indexPathForCell(sender as! UICollectionViewCell)
-//        vc.titleLabel.text = (filteredMovies![indexPath!.row] )["title"] as! String
-//        vc.overviewLabel.text = (filteredMovies![indexPath!.row])["overview"] as! String
-//        
-//    }
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        print("preparing for segue")
+        if let cell = sender as? UITableViewCell {
+            let indexPath = moviesTable.indexPathForCell(cell)
+            let movie = filteredMovies![indexPath!.row]
+            print(movie["title"])
+            
+            let detailVC = segue.destinationViewController as! DetailsViewController
+            detailVC.movie = movie
+        } else {
+            
+        }
+        
+        
+    }
     
 }

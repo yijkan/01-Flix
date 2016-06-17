@@ -25,7 +25,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MovieCollectionViewCell" id="JNd-6f-EPz" customClass="MovieCollectionViewCell" customModule="Flix" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="155" height="229"/>
+                                        <rect key="frame" x="0.0" y="64" width="155" height="229"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="155" height="229"/>
@@ -49,11 +49,11 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="movieCell" rowHeight="128" id="Zhk-jc-UOQ" customClass="MovieCell" customModule="Flix" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="movieCell" rowHeight="128" id="Zhk-jc-UOQ" customClass="MovieCell" customModule="Flix" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="320" height="128"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Zhk-jc-UOQ" id="JXY-rj-EZl">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="127.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="287" height="127.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="TJh-To-a0h">
@@ -80,6 +80,7 @@
                                             <outlet property="overviewLabel" destination="beX-Er-z7f" id="tN4-RO-tB2"/>
                                             <outlet property="posterImageView" destination="i6K-zt-6dK" id="iss-qB-9Ij"/>
                                             <outlet property="titleLabel" destination="TJh-To-a0h" id="dZU-9p-10E"/>
+                                            <segue destination="shE-uk-ZvS" kind="push" id="dH3-7a-tgS"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -115,8 +116,8 @@
                                     <action selector="viewChange:" destination="BYZ-38-t0r" eventType="valueChanged" id="dEt-xL-vmg"/>
                                 </connections>
                             </segmentedControl>
-                            <view hidden="YES" contentMode="scaleToFill" id="bqU-du-UG0">
-                                <rect key="frame" x="20" y="116" width="280" height="387"/>
+                            <view alpha="0.0" contentMode="scaleToFill" id="bqU-du-UG0">
+                                <rect key="frame" x="20" y="91" width="280" height="387"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Jm7-ts-0Hd">
@@ -141,13 +142,14 @@
                                     </scrollView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="Vh3-ic-Mrc" appends="YES" id="uWM-tF-8dU"/>
+                                </connections>
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <gestureRecognizers/>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="F7m-zt-SxX" appends="YES" id="gXj-fq-1l5"/>
-                        </connections>
                     </view>
                     <navigationItem key="navigationItem" title="Flix" id="P2a-yI-2s9">
                         <barButtonItem key="rightBarButtonItem" title="Settings" id="uPd-UZ-Vsx">
@@ -168,13 +170,13 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="F7m-zt-SxX">
+                <tapGestureRecognizer id="Vh3-ic-Mrc">
                     <connections>
-                        <action selector="onTap:" destination="BYZ-38-t0r" id="Wdo-nq-KwD"/>
+                        <action selector="closeDetails:" destination="BYZ-38-t0r" id="XfV-dR-oBA"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="684" y="258"/>
+            <point key="canvasLocation" x="610" y="267"/>
         </scene>
         <!--Details View Controller-->
         <scene sceneID="Yho-fb-7an">
@@ -184,6 +186,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Elc-1H-7Ce">
+                                <rect key="frame" x="77" y="77" width="166" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="3IW-3W-tcf">
                                 <rect key="frame" x="20" y="188" width="280" height="360"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -197,13 +206,6 @@
                                     </label>
                                 </subviews>
                             </scrollView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Elc-1H-7Ce">
-                                <rect key="frame" x="77" y="77" width="166" height="35"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -215,7 +217,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Knr-sT-RZB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="747" y="1018"/>
+            <point key="canvasLocation" x="806" y="940"/>
         </scene>
         <!--Settings-->
         <scene sceneID="ELL-YY-B3c">
@@ -268,7 +270,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CEd-7F-mIf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1067" y="257"/>
+            <point key="canvasLocation" x="1061" y="267"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="PHY-mZ-vcx">
