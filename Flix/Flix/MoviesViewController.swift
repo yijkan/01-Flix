@@ -236,7 +236,6 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        print("\(indexPath.row) selected")
         collectionView.deselectItemAtIndexPath(indexPath, animated: true)
         let movie = filteredMovies![indexPath.row]
         detailsTitle.text = movie["title"] as! String
@@ -260,6 +259,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
             let movieTitle = movie["title"] as! String
             return movieTitle.rangeOfString(searchText, options: .CaseInsensitiveSearch) != nil })
         moviesTable.reloadData()
+        moviesCollection.reloadData()
     }
 
     
@@ -273,12 +273,15 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         moviesSearchBar.resignFirstResponder()
         filteredMovies = movies
         moviesTable.reloadData()
+        moviesCollection.reloadData()
     }
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
-        print("they see me scrollin, they hatin")
-        view.endEditing(true)
+    
+    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        searchBarCancelButtonClicked(moviesSearchBar)
     }
+
+    
     
     @IBAction func viewChange(sender: AnyObject) {
         switch viewSelector.selectedSegmentIndex {
@@ -295,11 +298,9 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        print("preparing for segue")
         if let cell = sender as? UITableViewCell {
             let indexPath = moviesTable.indexPathForCell(cell)
             let movie = filteredMovies![indexPath!.row]
-            print(movie["title"])
             
             let detailVC = segue.destinationViewController as! DetailsViewController
             detailVC.movie = movie
