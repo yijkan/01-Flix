@@ -22,6 +22,10 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     
     @IBOutlet weak var moviesSearchBar: UISearchBar!
     
+    @IBOutlet weak var detailsView: UIView!
+    @IBOutlet weak var detailsTitle: UILabel!
+    @IBOutlet weak var detailsOverview: UILabel!
+    
     
     var movies: [NSDictionary]? = []
     var filteredMovies: [NSDictionary]?
@@ -116,7 +120,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         refreshCollectionControl = UIRefreshControl()
         refreshCollectionControl.addTarget(self, action: #selector(refreshControlAction(_:)), forControlEvents: UIControlEvents.ValueChanged)
         moviesCollection.insertSubview(refreshCollectionControl, atIndex: 0)
-
+        // make sure CollectionView bounces vertical!
         
         moviesTable.dataSource = self
         moviesTable.delegate = self
@@ -141,8 +145,6 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     
     func refreshControlAction(refreshControl: UIRefreshControl) {
         loadMovies(false)
-        print("refreshing")
-        //not working when there's no internet at first but using grid view? seems like it's because the collectionView isn't there when there are no images...
     }
     
     override func didReceiveMemoryWarning() {
@@ -207,8 +209,6 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        print(indexPath.row)
-        
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("MovieCollectionViewCell", forIndexPath: indexPath) as! MovieCollectionViewCell
         let movie = filteredMovies![indexPath.row]
         cell.movie = movie
@@ -235,6 +235,18 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         )
         return cell
     }
+    
+    // TODO it's not working
+//    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+//        print("\(indexPath.row) selected")
+//        collectionView.deselectItemAtIndexPath(indexPath, animated: true)
+//        let movie = filteredMovies![indexPath.row]
+//        detailsTitle.text = movie["title"] as! String
+//        detailsOverview.text = movie["overview"] as! String
+//        detailsView.hidden = false
+//    }
+    // using segue for now
+    
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         filteredMovies = searchText.isEmpty ? movies : movies!.filter({(movie: NSDictionary) -> Bool in
@@ -270,14 +282,13 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         }
     }
     
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
+//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+//        print("preparing for segue")
+//        var vc = segue.destinationViewController as! DetailsViewController
+//        var indexPath = moviesCollection.indexPathForCell(sender as! UICollectionViewCell)
+//        vc.titleLabel.text = (filteredMovies![indexPath!.row] )["title"] as! String
+//        vc.overviewLabel.text = (filteredMovies![indexPath!.row])["overview"] as! String
+//        
+//    }
     
 }
