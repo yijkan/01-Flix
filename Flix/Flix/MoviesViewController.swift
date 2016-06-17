@@ -10,7 +10,7 @@ import UIKit
 import AFNetworking
 import MBProgressHUD
 
-class MoviesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+class MoviesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate {
     
     let defaults = NSUserDefaults.standardUserDefaults()
     
@@ -276,6 +276,11 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         moviesSearchBar.resignFirstResponder()
         filteredMovies = movies
         moviesTable.reloadData()
+    }
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        print("they see me scrollin, they hatin")
+        view.endEditing(true)
     }
     
     @IBAction func viewChange(sender: AnyObject) {
