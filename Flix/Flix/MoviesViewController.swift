@@ -60,7 +60,9 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
             {(m1: NSDictionary, m2: NSDictionary) -> Bool in (m1["title"] as! String) < (m2["title"] as! String)} // order by title
         ]
         self.movies = self.movies!.sort(sortBy[self.defaults.integerForKey("order_by")])
-        self.filteredMovies = self.movies
+        self.filteredMovies = moviesSearchBar.text == nil || moviesSearchBar.text!.isEmpty ? movies : movies!.filter({(movie: NSDictionary) -> Bool in
+            let movieTitle = movie["title"] as! String
+            return movieTitle.rangeOfString(moviesSearchBar.text!, options: .CaseInsensitiveSearch) != nil })
         self.moviesTable.reloadData()
         self.moviesCollection.reloadData()
     }
@@ -254,12 +256,14 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         })
     }
     
+    //!!!
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        filteredMovies = searchText.isEmpty ? movies : movies!.filter({(movie: NSDictionary) -> Bool in
-            let movieTitle = movie["title"] as! String
-            return movieTitle.rangeOfString(searchText, options: .CaseInsensitiveSearch) != nil })
-        moviesTable.reloadData()
-        moviesCollection.reloadData()
+//        filteredMovies = searchText.isEmpty ? movies : movies!.filter({(movie: NSDictionary) -> Bool in
+//            let movieTitle = movie["title"] as! String
+//            return movieTitle.rangeOfString(searchText, options: .CaseInsensitiveSearch) != nil })
+//        moviesTable.reloadData()
+//        moviesCollection.reloadData()
+        sortMovies()
     }
 
     
@@ -278,7 +282,8 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     
     
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {
-        searchBarCancelButtonClicked(moviesSearchBar)
+        moviesSearchBar.showsCancelButton = false
+        moviesSearchBar.resignFirstResponder()
     }
 
     
