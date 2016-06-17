@@ -2,7 +2,7 @@
 
 Flix is a movies app using the [The Movie Database API](http://docs.themoviedb.apiary.io/#).
 
-Time spent: 8.5 hours spent in total
+Time spent: 10 hours spent in total
 
 ## User Stories
 
@@ -27,12 +27,12 @@ The following **optional** features are implemented:
 
 The following **additional** features are implemented:
 
-- [x] Settings to order the movies by popularity or title
 - [ ] Dark/Light themes
-- [ ] Search bar disappears and reappears with scroll
+- [x] Settings to order the movies by popularity or title
 - [x] Segmented Control for Table/Collection Views
-- [x] Tapping TableView cell shows title and overview
-- [x] Tapping CollectionView poster tapped brings up title and overview
+- [x] Tapping TableView cell shows details page
+- [x] Tapping CollectionView poster shows details view
+- [ ] Search bar disappears and reappears with scroll
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 

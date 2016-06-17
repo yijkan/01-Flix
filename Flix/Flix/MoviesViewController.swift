@@ -21,6 +21,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     @IBOutlet weak var moviesCollection: UICollectionView!
     
     @IBOutlet weak var moviesSearchBar: UISearchBar!
+    var searchBar: UISearchBar!
     
     @IBOutlet weak var detailsView: UIView!
     @IBOutlet weak var detailsTitle: UILabel!
@@ -28,32 +29,35 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     @IBOutlet weak var detailsOverviewText: UITextView!
     @IBOutlet weak var detailsPosterImageView: UIImageView!
     
-    
     var movies: [NSDictionary]? = []
     var filteredMovies: [NSDictionary]?
+    
+    // this function is copied from https://coderwall.com/p/6rfitq/ios-ui-colors-with-hex-values-in-swfit
+    func UIColorFromHex(rgbValue:UInt32, alpha:Double=1.0)->UIColor {
+        let red = CGFloat((rgbValue & 0xFF0000) >> 16)/256.0
+        let green = CGFloat((rgbValue & 0xFF00) >> 8)/256.0
+        let blue = CGFloat(rgbValue & 0xFF)/256.0
+        
+        return UIColor(red:red, green:green, blue:blue, alpha:CGFloat(alpha))
+    }
+    
+    var bg:UIColor!
+    var text:UIColor!
 
-    // TODO:
-    // for these animations, need to decide if re-appearing will fade out or just disappear...maybe blink?
-    // fading out seems like it will take to much time
-    // hiding it happens before the animation finishes
     func fadeErrorIn() {
-//        if self.networkErrorView.hidden {
-            self.networkErrorView.alpha = 0.0
-            self.networkErrorView.hidden = false
-            UIView.animateWithDuration(0.3, animations:{ () -> Void in
-                self.networkErrorView.alpha = 0.75
-            })
-//        } else { //already visible
-//        }
+        self.networkErrorView.alpha = 0.0
+        self.networkErrorView.hidden = false
+        UIView.animateWithDuration(0.3, animations:{ () -> Void in
+            self.networkErrorView.alpha = 0.75
+        })
     }
     
     func fadeErrorOut() {
-        if !self.networkErrorView.hidden {
+        if self.networkErrorView.alpha > 0.0 {
             self.networkErrorView.alpha = 0.75
             UIView.animateWithDuration(0.3, animations:{ () -> Void in
                 self.networkErrorView.alpha = 0.0
             })
-//            self.networkErrorView.hidden = true
         }
     }
     
@@ -131,6 +135,9 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         moviesCollection.dataSource = self
         moviesCollection.delegate = self
         
+        // TODO trying to animate searchbar?
+//        searchBar = UISearchBar(frame: CGRectMake(0.0, -80.0, 320.0, 44.0))
+//        navigationController?.navigationBar.addSubview(searchBar)
         moviesSearchBar.delegate = self
         
         loadMovies(true)
@@ -138,13 +145,32 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
+        if defaults.boolForKey("dark_scheme") {
+            bg = UIColor.blackColor()
+            text = UIColor.whiteColor()
+            UIApplication.sharedApplication().statusBarStyle = .LightContent
+        } else {
+            bg = UIColorFromHex(0xFAF5FF)
+            text = UIColorFromHex(0x3D007A)
+            UIApplication.sharedApplication().statusBarStyle = .Default
+        }
+        if let navigationBar = navigationController?.navigationBar {
+            navigationBar.barTintColor = bg
+            navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: text]
+        }
+        
         sortMovies()
     }
-    
+ 
 //    TODO to try to get the top bar to disappear with swipe
 //    override func viewDidAppear(animated: Bool) {
 //        navigationController?.hidesBarsOnSwipe = true
 //    }
+ 
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+    }
     
     func refreshControlAction(refreshControl: UIRefreshControl) {
         loadMovies(false)
@@ -156,9 +182,9 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     
-    @IBAction func onTap(sender: AnyObject) {
-        view.endEditing(true)
-    }
+//    @IBAction func onTap(sender: AnyObject) {
+//        view.endEditing(true)
+//    }
     
     // UITableViewDataSource Methods
     
@@ -172,6 +198,9 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = moviesTable.dequeueReusableCellWithIdentifier("movieCell", forIndexPath: indexPath) as! MovieCell
+        cell.contentView.backgroundColor = bg
+        cell.chevronImage.image = UIImage(named: "chevron-\(defaults.boolForKey("dark_scheme")).png")
+
         let movie = filteredMovies![indexPath.row]
         cell.movie = movie
         let title = movie["title"] as! String
@@ -179,6 +208,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         let baseURL = "http://image.tmdb.org/t/p/w342"
         let posterPath = movie["poster_path"] as! String
         cell.titleLabel.text = title
+        cell.titleLabel.textColor = text
         cell.overviewLabel.text = overview
         
         let imageRequest = NSURLRequest(URL: NSURL(string: baseURL + posterPath)!)
@@ -200,8 +230,15 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
                     cell.posterImageView.image = nil
                 }
         )
+        
         return cell
     }
+    
+//    func collectionView(collectionView: UICollectionView,
+//                        layout collectionViewLayout: UICollectionViewLayout,
+//                        insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+//        
+//    }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if let movies = filteredMovies {
@@ -213,6 +250,8 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("MovieCollectionViewCell", forIndexPath: indexPath) as! MovieCollectionViewCell
+        cell.contentView.backgroundColor = bg
+        
         let movie = filteredMovies![indexPath.row]
         cell.movie = movie
         let baseURL = "http://image.tmdb.org/t/p/w342"
@@ -246,7 +285,6 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         detailsTitle.text = movie["title"] as! String
         detailsOverviewText.text = movie["overview"] as! String
         
-        ///HERE
         if let posterPath = movie["poster_path"] as? String {
             print(posterPath)
             

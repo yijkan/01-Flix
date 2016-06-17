@@ -67,6 +67,11 @@ class DetailsViewController: UIViewController {
             
         }
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        // TODO set colors
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

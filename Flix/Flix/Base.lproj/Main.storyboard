@@ -14,30 +14,32 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" id="GtF-u2-1Zp">
-                                <rect key="frame" x="0.0" y="56" width="320" height="465"/>
+                                <rect key="frame" x="10" y="55" width="301" height="469"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="uX0-na-Wgz">
-                                    <size key="itemSize" width="155" height="229"/>
+                                <edgeInsets key="layoutMargins" top="8" left="8" bottom="8" right="8"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="zcO-zv-WjU">
+                                    <size key="itemSize" width="144" height="216"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MovieCollectionViewCell" id="JNd-6f-EPz" customClass="MovieCollectionViewCell" customModule="Flix" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="64" width="155" height="229"/>
+                                        <rect key="frame" x="0.0" y="64" width="144" height="216"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="155" height="229"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="144" height="216"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="Rgz-AI-ptB">
-                                                    <rect key="frame" x="0.0" y="0.0" width="155" height="229"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="144" height="216"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
+                                        <edgeInsets key="layoutMargins" top="8" left="8" bottom="8" right="8"/>
                                         <connections>
                                             <outlet property="posterImageView" destination="Rgz-AI-ptB" id="Du0-xj-9id"/>
                                         </connections>
@@ -45,19 +47,23 @@
                                 </cells>
                             </collectionView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="128" sectionHeaderHeight="28" sectionFooterHeight="28" id="9r0-wT-ISX">
-                                <rect key="frame" x="0.0" y="108" width="320" height="413"/>
+                                <rect key="frame" x="0.0" y="108" width="320" height="416"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="movieCell" rowHeight="128" id="Zhk-jc-UOQ" customClass="MovieCell" customModule="Flix" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="movieCell" rowHeight="128" id="Zhk-jc-UOQ" customClass="MovieCell" customModule="Flix" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="320" height="128"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Zhk-jc-UOQ" id="JXY-rj-EZl">
-                                            <rect key="frame" x="0.0" y="0.0" width="287" height="127.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="127.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="i8r-hd-GfJ">
+                                                    <rect key="frame" x="295" y="0.0" width="17" height="127.5"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="TJh-To-a0h">
-                                                    <rect key="frame" x="90" y="8" width="197" height="21"/>
+                                                    <rect key="frame" x="90" y="8" width="200" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -68,15 +74,16 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Overview" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="beX-Er-z7f">
-                                                    <rect key="frame" x="90" y="29" width="197" height="89"/>
+                                                    <rect key="frame" x="90" y="29" width="200" height="89"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="chevronImage" destination="i8r-hd-GfJ" id="7Fb-Jf-bA9"/>
                                             <outlet property="overviewLabel" destination="beX-Er-z7f" id="tN4-RO-tB2"/>
                                             <outlet property="posterImageView" destination="i6K-zt-6dK" id="iss-qB-9Ij"/>
                                             <outlet property="titleLabel" destination="TJh-To-a0h" id="dZU-9p-10E"/>
@@ -85,12 +92,16 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <searchBar contentMode="redraw" id="pJu-ep-c95">
+                            <searchBar contentMode="scaleToFill" placeholder="Search for a movie by title" id="pJu-ep-c95">
                                 <rect key="frame" x="0.0" y="64" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <scopeButtonTitles>
+                                    <string>Title</string>
+                                    <string>Title</string>
+                                </scopeButtonTitles>
                             </searchBar>
-                            <view hidden="YES" alpha="0.75" contentMode="scaleToFill" id="h85-dB-PQ9">
+                            <view alpha="0.0" contentMode="scaleToFill" id="h85-dB-PQ9">
                                 <rect key="frame" x="0.0" y="64" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
@@ -104,18 +115,26 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="7ck-7E-WKC">
-                                <rect key="frame" x="15" y="529" width="290" height="29"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <segments>
-                                    <segment title="List View"/>
-                                    <segment title="Grid View"/>
-                                </segments>
-                                <connections>
-                                    <action selector="viewChange:" destination="BYZ-38-t0r" eventType="valueChanged" id="dEt-xL-vmg"/>
-                                </connections>
-                            </segmentedControl>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="YDb-0e-OxT">
+                                <rect key="frame" x="0.0" y="524" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <items>
+                                    <barButtonItem style="plain" id="ntx-70-YyN">
+                                        <segmentedControl key="customView" opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" segmentControlStyle="plain" selectedSegmentIndex="0" id="7ck-7E-WKC">
+                                            <rect key="frame" x="16" y="7.5" width="290" height="29"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                            <segments>
+                                                <segment title="List View"/>
+                                                <segment title="Grid View"/>
+                                            </segments>
+                                            <connections>
+                                                <action selector="viewChange:" destination="BYZ-38-t0r" eventType="valueChanged" id="dEt-xL-vmg"/>
+                                            </connections>
+                                        </segmentedControl>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
                             <view alpha="0.0" contentMode="scaleToFill" id="bqU-du-UG0">
                                 <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -128,13 +147,6 @@
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Jm7-ts-0Hd">
-                                                <rect key="frame" x="8" y="0.0" width="304" height="105"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="27"/>
-                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="center" id="ZZ6-6Q-AN2">
                                                 <rect key="frame" x="8" y="113" width="304" height="357"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -143,6 +155,13 @@
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Jm7-ts-0Hd">
+                                                <rect key="frame" x="8" y="0.0" width="304" height="105"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="27"/>
+                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
@@ -158,7 +177,7 @@
                         <gestureRecognizers/>
                     </view>
                     <navigationItem key="navigationItem" title="Flix" id="P2a-yI-2s9">
-                        <barButtonItem key="rightBarButtonItem" title="Settings" id="uPd-UZ-Vsx">
+                        <barButtonItem key="rightBarButtonItem" image="SettingsButtonLight" id="uPd-UZ-Vsx">
                             <connections>
                                 <segue destination="wMC-NY-Nx8" kind="push" id="SOj-Re-nfS"/>
                             </connections>
@@ -183,7 +202,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="610" y="267"/>
+            <point key="canvasLocation" x="589" y="267"/>
         </scene>
         <!--Movie Details-->
         <scene sceneID="Yho-fb-7an">
@@ -256,18 +275,18 @@
                                 </connections>
                             </switch>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sort by" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="eV5-Cq-Dbz">
-                                <rect key="frame" x="20" y="119" width="56" height="21"/>
+                                <rect key="frame" x="20" y="131" width="56" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="IvO-Qf-xk6">
-                                <rect key="frame" x="119" y="116" width="181" height="29"/>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="IvO-Qf-xk6">
+                                <rect key="frame" x="127" y="128" width="173" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <segments>
                                     <segment title="Popularity"/>
-                                    <segment title="Alphabetical"/>
+                                    <segment title="Title"/>
                                 </segments>
                                 <connections>
                                     <action selector="orderChange:" destination="wMC-NY-Nx8" eventType="valueChanged" id="cvw-ra-CtO"/>
@@ -278,13 +297,15 @@
                     </view>
                     <navigationItem key="navigationItem" title="Settings" id="euO-bL-Nva"/>
                     <connections>
+                        <outlet property="colorSchemeLabel" destination="Z6T-zE-vBw" id="HfV-7n-BrA"/>
                         <outlet property="colorSchemeSwitch" destination="6CT-S0-WGu" id="ETM-Ke-dtt"/>
+                        <outlet property="orderLabel" destination="eV5-Cq-Dbz" id="zfY-qO-hCZ"/>
                         <outlet property="orderSegCon" destination="IvO-Qf-xk6" id="7CA-mX-EXi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CEd-7F-mIf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1061" y="267"/>
+            <point key="canvasLocation" x="1131" y="203"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="PHY-mZ-vcx">
@@ -305,4 +326,8 @@
             <point key="canvasLocation" x="153" y="267"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="SettingsButtonLight" width="22" height="22"/>
+    </resources>
+    <color key="tintColor" red="0.59999999999999998" green="0.20000000000000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
 </document>
