@@ -30,6 +30,10 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     var movies: [NSDictionary]? = []
     var filteredMovies: [NSDictionary]?
 
+    // TODO:
+    // for these animations, need to decide if re-appearing will fade out or just disappear...maybe blink?
+    // fading out seems like it will take to much time
+    // hiding it happens before the animation finishes
     func fadeErrorIn() {
 //        if self.networkErrorView.hidden {
             self.networkErrorView.alpha = 0.0
@@ -37,22 +41,17 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
             UIView.animateWithDuration(0.3, animations:{ () -> Void in
                 self.networkErrorView.alpha = 0.75
             })
-//        } else {
-//            //already visible 
-//            //TODO maybe blink once?
+//        } else { //already visible
 //        }
-        
-        // TODO decide later if I want to do anything about the error re-appearing
     }
     
     func fadeErrorOut() {
-        // TODO doesn't seem to be animating
         if !self.networkErrorView.hidden {
             self.networkErrorView.alpha = 0.75
             UIView.animateWithDuration(0.3, animations:{ () -> Void in
                 self.networkErrorView.alpha = 0.0
             })
-            self.networkErrorView.hidden = true
+//            self.networkErrorView.hidden = true
         }
     }
     
@@ -138,7 +137,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         sortMovies()
     }
     
-//    TODO um???
+//    TODO to try to get the top bar to disappear with swipe
 //    override func viewDidAppear(animated: Bool) {
 //        navigationController?.hidesBarsOnSwipe = true
 //    }
@@ -256,8 +255,6 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         })
     }
     
-    
-    
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         filteredMovies = searchText.isEmpty ? movies : movies!.filter({(movie: NSDictionary) -> Bool in
             let movieTitle = movie["title"] as! String
@@ -309,7 +306,6 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         } else {
             
         }
-        
         
     }
     
