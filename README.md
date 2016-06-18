@@ -35,8 +35,8 @@ The following **additional** features are implemented:
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
-1.
-2.
+1. I found it useful to create a util.swift file to contain functions and constants for the colors used throughout the view controllers
+2. 
 
 ## Video Walkthrough
 
@@ -64,17 +64,22 @@ GIFs created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-Describe any challenges encountered while building the app.
+I had put a Tap Gesture Recognizer on the entire screen, but this prevented any other taps (ie on table cells) from registering. I put print statements in the functions I expected to be called but didn't see anything, so I knew the functions weren't being called at all, and then it was just guesswork to figure out why that was.
+
+I had other features in mind, such as having the search bar animate in and out based on the user's scrolling or having it as a small button in the navigation bar that expands when clicked on, but I found this difficult and thought my efforts would be better spent making the colors look nice first.
 
 ## Credits
 
-List an 3rd party libraries, icons, graphics, or other assets you used in your app.
-
 - [AFNetworking](https://github.com/AFNetworking/AFNetworking) - networking task library
+- [MBProgressHUD](https://github.com/matej/MBProgressHUD)
+- [App icon](http://iconmonstr.com/video-2/)
+- [Gear icon](https://www.iconfinder.com/icons/185095/settings_streamline_icon#size=128)
+- [Disclosure indicator chevron](https://medium.com/@ronm333/changing-the-color-of-a-disclosure-indicator-666a7fdd9286#.bza5s5m18)
+- UIColorFromHex function from [here](https://coderwall.com/p/6rfitq/ios-ui-colors-with-hex-values-in-swfit)
 
 ## License
 
-    Copyright [yyyy] [name of copyright owner]
+    Copyright 2016 Yijin Kang
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
