@@ -18,5 +18,8 @@ func UIColorFromHex(rgbValue:UInt32, alpha:Double=1.0)->UIColor {
     return UIColor(red:red, green:green, blue:blue, alpha:CGFloat(alpha))
 }
 
-let lightHex:UInt32 = 0xFAF5FF
-let darkHex:UInt32 = 0x3D007A
+let black = UIColor.blackColor()
+let white = UIColor.whiteColor()
+let lightPurple = UIColorFromHex(0xFAF5FF)
+let darkPurple = UIColorFromHex(0x3D007A)
+let veryDarkPurple = UIColorFromHex(0x140029)

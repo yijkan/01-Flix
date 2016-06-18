@@ -24,32 +24,26 @@ class SettingsViewController: UIViewController {
     }
     
     func setColors() {
+        var bg:UIColor!
+        var text:UIColor!
         if defaults.boolForKey("dark_scheme") {
-            let black = UIColor.blackColor()
-            let white = UIColor.whiteColor()
-            
-            view.backgroundColor = black
-            colorSchemeLabel.textColor = white
-            orderLabel.textColor = white
-            if let navigationBar = navigationController?.navigationBar {
-                navigationBar.barTintColor = black
-                navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: white]
-            }
+            bg = black
+            text = white
             UIApplication.sharedApplication().statusBarStyle = .LightContent
             
         } else {
-            let dark = UIColorFromHex(darkHex)
-            let light = UIColorFromHex(lightHex)
-            
-            view.backgroundColor = light
-            colorSchemeLabel.textColor = dark
-            orderLabel.textColor = dark
-            if let navigationBar = navigationController?.navigationBar {
-                navigationBar.barTintColor = light
-                navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: dark]
-            }
+            bg = lightPurple
+            text = darkPurple
             UIApplication.sharedApplication().statusBarStyle = .Default
         }
+        view.backgroundColor = bg
+        colorSchemeLabel.textColor = text
+        orderLabel.textColor = text
+        if let navigationBar = navigationController?.navigationBar {
+            navigationBar.barTintColor = bg
+            navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: text]
+        }
+
     }
     
     override func viewWillAppear(animated: Bool) {

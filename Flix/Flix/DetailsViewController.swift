@@ -78,8 +78,8 @@ class DetailsViewController: UIViewController {
             text = UIColor.blackColor()
             UIApplication.sharedApplication().statusBarStyle = .LightContent
         } else {
-            bg = UIColorFromHex(lightHex)
-            text = UIColorFromHex(darkHex)
+            bg = lightPurple
+            text = darkPurple
             UIApplication.sharedApplication().statusBarStyle = .Default
         }
         if let navigationBar = navigationController?.navigationBar {

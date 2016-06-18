@@ -141,13 +141,13 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         super.viewWillAppear(animated)
         
         if defaults.boolForKey("dark_scheme") {
-            bg = UIColor.blackColor()
-            text = UIColor.whiteColor()
+            bg = black
+            text = white
             UIApplication.sharedApplication().statusBarStyle = .LightContent
             moviesSearchBar.barStyle = .Black
         } else {
-            bg = UIColorFromHex(lightHex)
-            text = UIColorFromHex(darkHex)
+            bg = lightPurple
+            text = darkPurple
             UIApplication.sharedApplication().statusBarStyle = .Default
             moviesSearchBar.barStyle = .Default
         }
@@ -230,8 +230,33 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
                     cell.posterImageView.image = nil
                 }
         )
+        cell.selectionStyle = .None // get rid of the default selection style
         
         return cell
+    }
+    
+    func tableView(tableView: UITableView, didHighlightRowAtIndexPath indexPath: NSIndexPath) {
+        print("highlighted")
+        let cell = tableView.cellForRowAtIndexPath(indexPath)
+        if defaults.boolForKey("dark_scheme") {
+            cell?.contentView.backgroundColor = veryDarkPurple
+        } else {
+            cell?.contentView.backgroundColor = white
+        }
+    }
+    
+    func tableView(tableView: UITableView, didUnhighlightRowAtIndexPath indexPath: NSIndexPath) {
+        print("unhighlighted")
+        let cell = tableView.cellForRowAtIndexPath(indexPath)
+        if defaults.boolForKey("dark_scheme") {
+            cell?.contentView.backgroundColor = black
+        } else {
+            cell?.contentView.backgroundColor = lightPurple
+        }
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated:true)
     }
     
 //    func collectionView(collectionView: UICollectionView,

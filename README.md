@@ -2,7 +2,7 @@
 
 Flix is a movies app using the [The Movie Database API](http://docs.themoviedb.apiary.io/#).
 
-Time spent: 13 hours spent in total
+Time spent: 13.5 hours spent in total
 
 ## User Stories
 
@@ -21,7 +21,7 @@ The following **optional** features are implemented:
 - [x] All images fade in as they are loading.
 - [x] User can view the large movie poster by tapping on a cell.
 - [x] For the large poster, load the low resolution image first and then switch to the high resolution image when complete.
-- [ ] Customize the selection effect of the cell.
+- [x] Customize the selection effect of the cell.
 - [x] Customize the navigation bar.
 - [x] Customize the UI.
 
@@ -42,9 +42,25 @@ Please list two areas of the assignment you'd like to **discuss further with you
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/jNC4OPD.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+User can view movies in both list and grid form. Clicking on one brings up a larger poster image and the full overview. User can also change the ordering of the movies
 
-GIF created with [LiceCap](http://www.cockos.com/licecap/).
+<img src='http://i.imgur.com/Ci85dhD.gif' title='demo-light' width='' alt='demo-light' />
+
+There is also a dark theme
+
+<img src='http://i.imgur.com/JWnAagy.gif' title='demo-dark' width='' alt='demo-dark' />
+
+User can also search for movies in both table and collection views
+
+<img src='http://i.imgur.com/Q0rlsMS.gif' title='search-table' width='' alt='search-table' />
+<img src='http://i.imgur.com/w5BTUG6.gif' title='search-collection' width='' alt='search-collection' />
+
+A network error will cause an error message to appear
+
+<img src='http://i.imgur.com/o6zvWUw.gif' title='networkerror-light' width='' alt='networkerror-light' />
+<img src='http://i.imgur.com/yN5NxI5.gif' title='networkerror-dark' width='' alt='networkerror-dark' />
+
+GIFs created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
